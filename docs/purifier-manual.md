@@ -1,13 +1,12 @@
-Stock Purifier Software Module - User Manual
-============================================
+ Purifier Klipper Module - User Manual body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; margin: 2rem auto; max-width: 900px; padding: 0 1rem; } h1, h2, h3 { color: #222; } code { background: #f5f5f5; padding: 0.1rem 0.25rem; border-radius: 3px; } pre { background: #f5f5f5; padding: 0.75rem; border-radius: 4px; overflow-x: auto; } hr { margin: 2rem 0; }
 
-1\. What the purifier module does
----------------------------------
+# Purifier Klipper Module - User Manual (Snapmaker U1/ Klipper Integration)
 
-The purifier module controls two fans (exhaust and inner) and their power for your Snapmaker U1/Klipper setup. It monitors chamber temperature and fan RPM, can automatically adjust fan speed, and can pause printing if cooling/heating fails or becomes unsafe.
+## 1\. What the purifier module does
 
-2\. Hardware the module expects
--------------------------------
+The purifier module controls two fans (exhaust and inner) and their power for your Snapmaker/Klipper setup. It monitors chamber temperature and fan RPM, can automatically adjust fan speed, and can pause printing if cooling/heating fails or becomes unsafe.
+
+## 2\. Hardware the module expects
 
 *   **Exhaust fan**: Chamber exhaust fan driven by a PWM pin configured as `exhaust_pin`.
 *   **Inner fan**: Internal circulation fan on a PWM pin configured as `inner_pin`.
@@ -20,8 +19,7 @@ The purifier module controls two fans (exhaust and inner) and their power for yo
 
 The module stores persistent settings in `purifier.json` under the printer’s persistent config directory (exhaust delay time, inner delay time, inner fan work time).
 
-3\. Fan behavior and power logic
---------------------------------
+## 3\. Fan behavior and power logic
 
 *   **Speed range**: Speeds are 0.0–1.0 internally, where 1.0 equals the configured maximum power.  
     Example: 0.1 = 10%, 0.4 = 40% and 1 = 100% full speed respectively
@@ -29,8 +27,7 @@ The module stores persistent settings in `purifier.json` under the printer’s p
 *   **Power enable**: If either fan’s speed is > 0, the power enable pin is set high; if both are zero, it is set low.
 *   **Power detection**: If purifier system is detached or pull-down resistor is not detected, 24V power will be off, both fans are turned off, mode resets to IDLE, and a log notes the purifier is offline.
 
-4\. Operating modes
--------------------
+## 4\. Operating modes
 
 Select modes with `SET_PURIFIER_MODE MODE=<0–3> ...`.
 
@@ -63,15 +60,15 @@ Key parameters: `DESIRE_TEMP`, `FAN_SPEED`, `DELAY_OFF`.
 
 Key parameters: `DESIRE_TEMP`, `FAN_SPEED`, `DELAY_OFF`.
 
-5\. G-code commands
--------------------
+## 5\. G-code commands
 
 ### 5.1 `SET_PURIFIER`
 
 Basic fan control and delay settings.
 
-    SET_PURIFIER FAN=<exhaust|inner> SPEED=<speed> DELAY_OFF=<seconds> WORK=<seconds>
-    
+```
+SET_PURIFIER FAN=<exhaust|inner> SPEED=<speed> DELAY_OFF=<seconds> WORK=<seconds>
+```
 
 *   `FAN`: `exhaust` or `inner`.
 *   `SPEED`: 0.0–1.0; sets fan speed directly.
@@ -87,8 +84,9 @@ Basic fan control and delay settings.
 
 Selects and configures operating mode 0–3.
 
-    SET_PURIFIER_MODE MODE=<0|1|2|3> [mode-specific parameters]
-    
+```
+SET_PURIFIER_MODE MODE=<0|1|2|3> [mode-specific parameters]
+```
 
 *   Mode 0 (IDLE): `EXHAUST_FAN_DELAY_OFF`, `INNER_FAN_DELAY_OFF`.
 *   Mode 1 (COOL CHAMBER): `FAN_SPEED`, `DESIRE_TEMP`, `ALARM_TEMP`, `DELAY_OFF`, `DYNAMIC_FAN_CONTROL`.
@@ -99,15 +97,15 @@ Selects and configures operating mode 0–3.
 
 Waits for chamber temperature conditions with a timeout.
 
-    WAIT_CHAMBER_TEMP TIMEOUT=<seconds>
-    
+```
+WAIT_CHAMBER_TEMP TIMEOUT=<seconds>
+```
 
 *   Requires purifier to be detected; otherwise returns immediately with a message, "\[purifier\] Cannot wait for temperature: purifier not detected!"
 *   Enables internal preheat-wait state and optionally overrides timeout.
 *   Periodically reports current temperature, target, remaining timeout, last temperature, and remaining time.
 
-6\. Webhook API
----------------
+## 6\. Webhook API
 
 The endpoint `control/purifier` accepts `fan`, `speed`, `delay`, and `work` fields similar to `SET_PURIFIER`.
 
@@ -118,30 +116,32 @@ The endpoint `control/purifier` accepts `fan`, `speed`, `delay`, and `work` fiel
 
 Returns JSON: `{"state": "success"}` on success, or `{"state": "error", "message": "..."}` on failure.
 
-7\. Safety and automatic pause
-------------------------------
+## 7\. Safety and automatic pause
 
 *   **Fan RPM fault**: if the inner fan is commanded on but RPM stays zero long enough, a structured error is raised and the print is paused.
 *   **Cooling failure**: in COOL CHAMBER mode, if chamber temperature cannot be reduced below critical thresholds within the timeout, an error is prompted, "Failed to cool chamber temperature, Chamber temperature is too high! Current temperature: XX , Critical temperature: XX, 0002-0533-0000-0001" and the print is paused.
 *   **Power loss**: if purifier power is lost, both fans are turned off, mode resets to IDLE, and the purifier is logged as offline.
 
-8\. Typical usage examples
---------------------------
+## 8\. Typical usage examples
 
 ### 8.1 Cool chamber after a print
 
-    SET_PURIFIER_MODE MODE=1 FAN_SPEED=0.6 DESIRE_TEMP=40 ALARM_TEMP=45 DELAY_OFF=180 DYNAMIC_FAN_CONTROL=1
-    
+```
+SET_PURIFIER_MODE MODE=1 FAN_SPEED=0.6 DESIRE_TEMP=40 ALARM_TEMP=45 DELAY_OFF=180 DYNAMIC_FAN_CONTROL=1
+```
 
 ### 8.2 Preheat chamber before a print
 
-    
-    SET_PURIFIER_MODE MODE=2 DESIRE_TEMP=50 FAN_SPEED=0.6 DELAY_OFF=180
-    WAIT_CHAMBER_TEMP TIMEOUT=300
-    
+```
+
+SET_PURIFIER_MODE MODE=2 DESIRE_TEMP=50 FAN_SPEED=0.6 DELAY_OFF=180
+WAIT_CHAMBER_TEMP TIMEOUT=300
+```
 
 ### 8.3 Simple manual fan control
 
-    
-    SET_PURIFIER FAN=exhaust SPEED=0.8 DELAY_OFF=180
-    SET_PURIFIER FAN=exhaust SPEED=0
+```
+
+SET_PURIFIER FAN=exhaust SPEED=0.8 DELAY_OFF=180
+SET_PURIFIER FAN=exhaust SPEED=0
+```
