@@ -8,7 +8,7 @@
 
 A custom Snapmaker U1 project to build my own external **Black Box** for dual PWM fan control, based on reverse-engineering the U1 purifier firmware path.
 
-This project started when I compared the old purifier config with the newer V1.3.0 version and found a very important change: `PA9` used to be a tachometer input, but in the newer config it became the PWM control output for the inner fan, while tach feedback moved to `PA6`.
+This project started when I compared the old purifier config with the newer V1.3.0 firmware version and found a very important change: `PA9` used to be a tachometer input, but in the newer config it became the PWM control output for the inner fan, while tach feedback moved to `PA6`.
 
 That discovery changed everything. Instead of waiting for the official top-cover hardware, I decided to build my own solution and document the whole journey.
 
