@@ -114,7 +114,7 @@ The goal of the custom PCB is to integrate:
 3. An Arduino or ESP32 board.
 4. Servo control for a vent shutter.
 5. A DC-to-DC buck converter.
-6. A PPTC 24V 1A fuse on the input power rail.
+6. A PPTC 24V 1A Resettable Fuse on the input power rail for overloading protection.
 
 This board is meant to turn the current proof-of-concept wiring into a cleaner, safer, and more expandable system.
 
