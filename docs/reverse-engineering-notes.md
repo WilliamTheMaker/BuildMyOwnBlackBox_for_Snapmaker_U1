@@ -105,7 +105,7 @@ That role change on `PA9` is the basis for the Black Box conversion circuit.
 
 The attached purifier manual confirms that the module now controls two fans, `exhaust` and `inner`, and supports direct commands, mode-based control, chamber-temperature waiting, and a web endpoint for integration.
 
-See: [`user-manual.md`](user-manual.md)
+See: [`purifier-manual.md`](purifier-manual.md)
 
 ## Conclusion
 
