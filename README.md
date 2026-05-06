@@ -12,6 +12,8 @@ This project started when I compared the old purifier config with the newer V1.3
 
 That discovery changed everything. Instead of waiting for the official top-cover hardware, I decided to build my own solution and document the whole journey.
 
+![This photo shows the prototyping succeeded — with two square wave forms from the signal pins of PA8 and PA9 via a DIY PWM converter](images/prototyping.jpg "The prototyping result")
+
 ## Why this project exists
 
 The purpose of this project is to turn a firmware finding into a real hardware mod.
@@ -186,6 +188,7 @@ docs/
 images/
   README.md
   pa9-to-pwm-conversion.jpg
+  prototyping.jpg
 ```
 
 ## Related docs
