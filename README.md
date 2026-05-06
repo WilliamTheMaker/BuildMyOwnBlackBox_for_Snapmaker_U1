@@ -129,7 +129,9 @@ SET_PURIFIER_MODE MODE=2 DESIRE_TEMP=50 FAN_SPEED=0.6 DELAY_OFF=180
 WAIT_CHAMBER_TEMP TIMEOUT=300
 ```
 
-More details are in [`docs/user-manual.md`](docs/user-manual.md).
+More details are in [`docs/purifier-manual.md`](docs/purifier-manual.md)
+
+<a href="https://github.com/WilliamTheMaker/BuildMyOwnBlackBox_for_Snapmaker_U1/raw/main/docs/purifier-manual-revised.html" target="_blank" rel="noopener noreferrer">Click here to show an easy reading one in HTML format</a>
 
 ## My background
 
@@ -180,7 +182,8 @@ images/
 
 - [`docs/reverse-engineering-notes.md`](docs/reverse-engineering-notes.md)
 - [`docs/hardware-plan.md`](docs/hardware-plan.md)
-- [`docs/user-manual.md`](docs/user-manual.md)
+- [`docs/purifier-manual.md`](docs/purifier-manual.md)
+- [`docs/purifier-manual-revised.html (HTML format of purifier manual)`](docs/purifier-manual-revised.html)  
 
 ## Disclaimer
 
