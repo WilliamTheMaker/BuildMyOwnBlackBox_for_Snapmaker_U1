@@ -171,10 +171,13 @@ If you are interested in licensing, collaboration, sponsored development, or an 
 README.md
 LICENSE.md
 docs/
-  reverse-engineering-notes.md
   hardware-plan.md
+  purifier-manual-revised.html
+  purifier-manual.md
+  reverse-engineering-notes.md
   user-manual.md
 images/
+  README.md
   pa9-to-pwm-conversion.jpg
 ```
 
@@ -183,7 +186,8 @@ images/
 - [`docs/reverse-engineering-notes.md`](docs/reverse-engineering-notes.md)
 - [`docs/hardware-plan.md`](docs/hardware-plan.md)
 - [`docs/purifier-manual.md`](docs/purifier-manual.md)
-- [`docs/purifier-manual-revised.html (HTML format of purifier manual)`](docs/purifier-manual-revised.html)  
+- [`docs/purifier-manual-revised.html (HTML format of purifier manual)`](docs/purifier-manual-revised.html)
+- [`docs/user-manual.md`](docs/user-manual.md) 
 
 ## Disclaimer
 
