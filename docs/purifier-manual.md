@@ -1,5 +1,3 @@
- Purifier Klipper Module - User Manual body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; margin: 2rem auto; max-width: 900px; padding: 0 1rem; } h1, h2, h3 { color: #222; } code { background: #f5f5f5; padding: 0.1rem 0.25rem; border-radius: 3px; } pre { background: #f5f5f5; padding: 0.75rem; border-radius: 4px; overflow-x: auto; } hr { margin: 2rem 0; }
-
 # Purifier Klipper Module - User Manual (Snapmaker U1/ Klipper Integration)
 
 ## 1\. What the purifier module does
