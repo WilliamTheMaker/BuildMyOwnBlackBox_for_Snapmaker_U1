@@ -1,28 +1,29 @@
 # Snapmaker U1 Black Box Dual PWM Fan Mod
 
-An unofficial Snapmaker U1 mod project to build a custom electronic **Black Box** for two PWM fans, based on reverse-engineering the purifier-related Klipper configuration and control logic.
+![Status](https://img.shields.io/badge/status-active%20prototype-orange)
+![Focus](https://img.shields.io/badge/focus-PA9%20tach--to--PWM-yellow)
+![Platform](https://img.shields.io/badge/platform-Snapmaker%20U1-blue)
+![Next Step](https://img.shields.io/badge/next%20step-KiCad%20PCB-green)
+![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)
 
-The key discovery came from comparing the old purifier config with the newer V1.3.0 version. In the old config, `PA9` was used as `tachometer_pin`, while in the new config it became `inner_pin`, and tach feedback moved to `PA6` as `inner_tach_pin`.
+A custom Snapmaker U1 project to build my own external **Black Box** for dual PWM fan control, based on reverse-engineering the U1 purifier firmware path.
 
-That role change on `PA9` is the main reason this project exists.
+This project started when I compared the old purifier config with the newer V1.3.0 version and found a very important change: `PA9` used to be a tachometer input, but in the newer config it became the PWM control output for the inner fan, while tach feedback moved to `PA6`.
 
-## Project goal
+That discovery changed everything. Instead of waiting for the official top-cover hardware, I decided to build my own solution and document the whole journey.
 
-The goal is to convert the original `PA9` tach-oriented signal path into a usable PWM control path for the inner fan.
+## Why this project exists
 
-Instead of waiting for the official top-cover hardware, I am building my own external Black Box and using the firmware direction that is already visible in the purifier stack.
+The purpose of this project is to turn a firmware finding into a real hardware mod.
 
-## Background
+By comparing the purifier settings across firmware versions, I found that the design had already evolved from a single-fan layout into a dual-fan layout with separate `exhaust` and `inner` fan control paths.
 
-I have been building custom 3D printers since 2013, starting with a Delta Mini.
+That means the software side was already pointing in the right direction. My job now is to build the hardware that makes that design practical.
 
-My Voron V2.4 was built in 2021 and evolved through several iterations into a wide-edition 6AWD IDEX machine.
+## The key finding
 
-The Snapmaker U1 is the first consumer 3D printer I have purchased. I bought it as a backup machine so I could still print structural parts while my custom Voron was disassembled.
+In the old purifier config:
 
-## Firmware findings
-
-Old purifier config:
 ```ini
 [purifier]
 pin: !PA8
@@ -36,7 +37,8 @@ power_det_pin: PA7
 power_det_threshold: 0.88
 ```
 
-New purifier config in V1.3.0:
+In the newer V1.3.0 purifier config:
+
 ```ini
 [purifier]
 # exhaust fan
@@ -59,36 +61,57 @@ power_det_threshold: 0.88
 external_temp_sensor: cavity
 ```
 
-What changed:
+The change is clear:
 
 - `PA8` remains a fan-control output.
-- `PA9` changed from tach input to PWM output for the inner fan.
-- `PA6` became the inner fan tach feedback pin.
+- `PA9` changes from tach input to PWM output for the inner fan.
+- `PA6` becomes the tach feedback pin for the inner fan.
 
-## Hardware concept
+That role change on `PA9` is the core technical trigger for this repo.
 
-The Black Box sits between the 6-pin header at the top of the Snapmaker U1 and two PWM fans:
+## What the Black Box does
+
+The Black Box is designed to sit between the 6-pin header at the top of the Snapmaker U1 and two PWM fans:
 
 - One exhaust fan
 - One inner air-circulation fan
 
-The exhaust path is planned to include a servo-controlled vent shutter so the air outlet can be shut and kept air-tight when the system is off.
+The exhaust fan path is planned to include a servo-controlled vent shutter so the outlet can be closed and kept air-tight when the system is off.
 
-The inner fan is intended for chamber air circulation and follows the stock purifier concept, where it is paired with HEPA and active-carbon filtration.
+The inner fan is intended for chamber air circulation, following the same general idea as the stock purifier concept with HEPA and active-carbon filtration.
 
-The current `PA9` conversion stage uses a simple transistor interface:
+The most important part of the electronics is the conversion of the original `PA9` tach-oriented path into a fan-friendly PWM control path.
+
+## Current hardware direction
+
+The current proof-of-concept conversion stage uses a simple transistor interface:
 
 - `Q1`: 2N3904
-- `R1`: 10k from `PA9` to base
+- `R1`: 10k from `PA9` to transistor base
 - `R2`: 4.7k pull-up to `+5V`
 - collector output to the fan PWM wire
 - shared ground with the printer
 
-See: [`docs/hardware-plan.md`](docs/hardware-plan.md)
+This is intended to behave more like the open-collector style PWM interface expected by a standard 4-wire fan.
+
+I am now moving from bench testing toward designing my first custom PCB in KiCad.
+
+## PCB roadmap
+
+The goal of the custom PCB is to integrate:
+
+1. A conversion circuit that changes `PA9` from tach to PWM.
+2. A 24V/12V fan selector.
+3. An Arduino or ESP32 board.
+4. Servo control for a vent shutter.
+5. A DC-to-DC buck converter.
+6. A PPTC 24V 1A fuse on the input power rail.
+
+This board is meant to turn the current proof-of-concept wiring into a cleaner, safer, and more expandable system.
 
 ## User control
 
-The purifier module supports direct control of both fans.
+The purifier module already supports two fan channels, `exhaust` and `inner`, and can be controlled directly with G-code.
 
 Basic examples:
 ```gcode
@@ -99,29 +122,38 @@ SET_PURIFIER FAN=inner SPEED=0
 GET_PURIFIER
 ```
 
-Mode-based control is also available:
+It also supports mode-based control and chamber-related workflows:
 ```gcode
 SET_PURIFIER_MODE MODE=1 FAN_SPEED=0.6 DESIRE_TEMP=40 ALARM_TEMP=45 DELAY_OFF=180 DYNAMIC_FAN_CONTROL=1
 SET_PURIFIER_MODE MODE=2 DESIRE_TEMP=50 FAN_SPEED=0.6 DELAY_OFF=180
 WAIT_CHAMBER_TEMP TIMEOUT=300
 ```
 
-See: [`docs/user-manual.md`](docs/user-manual.md)
+More details are in [`docs/user-manual.md`](docs/user-manual.md).
 
-## AI-assisted learning
+## My background
 
-This project is also about learning with AI.
+I have been building custom 3D printers since 2013, starting with a Delta Mini.
 
-AI helped me understand digital I/O, MCU pin behavior, PWM fan control, firmware logic, and circuit ideas faster. It did not replace hands-on testing, but it made the loop of reading, questioning, testing, and revising much more efficient.
+My Voron V2.4 was built in 2021 and evolved through several iterations into a wide-edition 6AWD IDEX machine.
+
+The Snapmaker U1 is the first consumer 3D printer I have purchased. I bought it as a backup machine so I could still print structural parts while my custom Voron was disassembled.
+
+## Why AI matters here
+
+This project is also a personal learning story.
+
+AI helped me move faster through firmware reading, digital I/O concepts, MCU behavior, PWM fan control, circuit ideas, and debugging strategy. It did not replace hands-on work, but it made the learning loop much tighter and much more productive.
+
+For me, this project is one example of how AI can be a practical tool for maker-level electronics learning, especially when combined with reverse-engineering and bench testing.
 
 ## Support
 
 If this project is useful to you and you want to support continued development, you can support me via **Ko-fi**.
 
-This support helps fund prototyping costs, parts, test hardware, PCB revisions, and time spent documenting the project.
+Support helps fund parts, prototyping, test hardware, PCB revisions, and time spent documenting the project.
 
-> Replace this line with your Ko-fi link:  
-> `https://ko-fi.com/YOUR_NAME`
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/williamthemaker)
 
 ## Commercial use
 
@@ -131,7 +163,7 @@ Commercial manufacturing, resale, redistribution of design files, or use of this
 
 If you are interested in licensing, collaboration, sponsored development, or an official manufacturing arrangement, please contact me directly.
 
-## Repo layout
+## Repository structure
 
 ```text
 README.md
