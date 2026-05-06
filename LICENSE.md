@@ -1,6 +1,6 @@
 # License
 
-Copyright (c) 2026 [Your Name]
+Copyright (c) 2026 William Chan
 
 All rights reserved.
 
