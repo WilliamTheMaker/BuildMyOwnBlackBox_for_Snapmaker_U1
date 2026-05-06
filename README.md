@@ -103,7 +103,7 @@ I am now moving from bench testing toward designing my first custom PCB in KiCad
 *** For anyone with soldering experience, you don't need to wait for my PCB. Just put all the above electronic components together on a perfboard or stripboard, and you'll have a Tach-to-PWM converter. 
 
 Pls find below the circuit diagram.
-![Circuit Diagram](/images/pa9-to-pwm-conversion.jpg")
+![Circuit Diagram](images/pa9-to-pwm-conversion.jpg "Circuit Diagram")
 
 ## PCB roadmap
 
