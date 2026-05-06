@@ -1,1 +1,1 @@
-Here to store all image files
+Image assets for the project README and documentation.
