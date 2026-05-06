@@ -131,7 +131,7 @@ WAIT_CHAMBER_TEMP TIMEOUT=300
 
 More details are in [`docs/purifier-manual.md`](docs/purifier-manual.md)
 
-<a href="https://github.com/WilliamTheMaker/BuildMyOwnBlackBox_for_Snapmaker_U1/raw/main/docs/purifier-manual-revised.html" target="_blank" rel="noopener noreferrer">Click here to show an easy reading one in HTML format</a>
+<a href="https://github.com/WilliamTheMaker/BuildMyOwnBlackBox_for_Snapmaker_U1/raw/main/docs/purifier-manual-revised.html" target="_blank" rel="noopener noreferrer">Click here to show and download the raw HTML format</a>
 
 ## My background
 
