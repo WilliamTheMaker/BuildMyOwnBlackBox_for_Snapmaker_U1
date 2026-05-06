@@ -4,7 +4,7 @@ Stock Purifier Software Module - User Manual
 1\. What the purifier module does
 ---------------------------------
 
-The purifier module controls two fans (exhaust and inner) and their power for your Snapmaker/Klipper setup. It monitors chamber temperature and fan RPM, can automatically adjust fan speed, and can pause printing if cooling/heating fails or becomes unsafe.
+The purifier module controls two fans (exhaust and inner) and their power for your Snapmaker U1/Klipper setup. It monitors chamber temperature and fan RPM, can automatically adjust fan speed, and can pause printing if cooling/heating fails or becomes unsafe.
 
 2\. Hardware the module expects
 -------------------------------
