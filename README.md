@@ -89,12 +89,19 @@ The current proof-of-concept conversion stage uses a simple transistor interface
 - `Q1`: 2N3904
 - `R1`: 10k from `PA9` to transistor base
 - `R2`: 4.7k pull-up to `+5V`
+- `DC-2-DC Buck Converter`: 24V to 5V step-down to drive PWM signal, e.g. MP1854
 - collector output to the fan PWM wire
 - shared ground with the printer
 
 This is intended to behave more like the open-collector style PWM interface expected by a standard 4-wire fan.
 
 I am now moving from bench testing toward designing my first custom PCB in KiCad.
+
+## DIY - No waiting is needed
+*** For anyone with soldering experience, you don't need to wait for my PCB. Just put all the above electronic components together on a perfboard or stripboard, and you'll have a Tach-to-PWM converter. 
+
+Pls find below the circuit diagram.
+![Circuit Diagram](/images/pa9-to-pwm-conversion.jpg")
 
 ## PCB roadmap
 
