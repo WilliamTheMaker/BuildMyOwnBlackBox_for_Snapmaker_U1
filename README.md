@@ -105,6 +105,9 @@ I am now moving from bench testing toward designing my first custom PCB in KiCad
 Pls find below the circuit diagram.
 ![Circuit Diagram](images/pa9-to-pwm-conversion.jpg "Circuit Diagram")
 
+and Pin Assignement Diagram of the 6-pins header/ Molex plug (Old & New)
+![Pin Assignement Diagram](images/pin-assignment-diagram-comparision.png "Pin Assignement Diagram")
+
 ## PCB roadmap
 
 The goal of the custom PCB is to integrate:
@@ -189,6 +192,7 @@ images/
   README.md
   pa9-to-pwm-conversion.jpg
   prototyping.jpg
+  pin-assignment-diagram-comparision.png
 ```
 
 ## Related docs
