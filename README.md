@@ -6,6 +6,8 @@
 ![Next Step](https://img.shields.io/badge/next%20step-KiCad%20PCB-green)
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)
 
+13-Aug-2026 Updates: I did a test just now. It is fully compatible with latest stock firmware v1.5.2 as well as PAXX custom firmware v1.5.2-paxx12-21.
+
 A custom Snapmaker U1 project to build my own external **Black Box** for dual PWM fan control, based on reverse-engineering the U1 purifier firmware path.
 
 This project started when I compared the old purifier config with the newer V1.3.0 firmware version and found a very important change: `PA9` used to be a tachometer input, but in the newer config it became the PWM control output for the inner fan, while tach feedback moved to `PA6`.
