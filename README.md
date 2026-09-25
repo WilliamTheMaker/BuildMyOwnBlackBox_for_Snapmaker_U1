@@ -129,11 +129,11 @@ The purifier module already supports two fan channels, `exhaust` and `inner`, an
 
 Basic examples:
 ```gcode
-SET_PURIFIER FAN=exhaust SPEED=0.8 DELAY_OFF=180
-SET_PURIFIER FAN=inner SPEED=0.6 DELAY_OFF=120
-SET_PURIFIER FAN=exhaust SPEED=0
-SET_PURIFIER FAN=inner SPEED=0
-GET_PURIFIER
+SET_PURIFIER FAN=exhaust SPEED=0 DELAY_OFF=180 ; Stop the exhaust fan after 180 sec
+SET_PURIFIER FAN=inner SPEED=0 DELAY_OFF=120 ; Stop the inner (air-circulation) fan after 120 sec
+SET_PURIFIER FAN=exhaust SPEED=0.8 ; Runs exhaust fan in 80% speed
+SET_PURIFIER FAN=inner SPEED=0.6 ; Runs inner (air-circulation) fan in 60% speed
+GET_PURIFIER ; Shows all the current status of purifier system likes current fan speed...etc
 ```
 
 It also supports mode-based control and chamber-related workflows:
